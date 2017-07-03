@@ -47,8 +47,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Holder
         holder.txtTitle.setText(bbs.title);
         holder.txtAuthor.setText(bbs.author);
         holder.setCount(bbs.count);
-        holder.setDate(bbs.date);
+        holder.setDate(convertLongToString(bbs.date));
 
+    }
+
+    private String convertLongToString(long date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
+        return sdf.format(date);
     }
 
 
@@ -69,9 +74,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Holder
             txtCount.setText(count + "");
         }
 
-        public String setDate (long date){
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
-            return sdf.format(date);
+        public void setDate(String date){
+            txtDate.setText(date + "");
         }
+
     }
 }

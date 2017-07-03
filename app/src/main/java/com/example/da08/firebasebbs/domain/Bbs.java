@@ -17,9 +17,10 @@ public class Bbs {
 
     }
 
-    public Bbs(String title, String author, String content){
+    public Bbs(String title, String author, String content, long date){
         this.title = title;
         this.author = author;
         this.content = content;
+        this.date = date;
     }
 }

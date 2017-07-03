@@ -10,6 +10,8 @@ import com.example.da08.firebasebbs.domain.Bbs;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Date;
+
 public class DetailActivity extends AppCompatActivity {
 
     EditText editTitle, editAuthor, editContent;
@@ -39,11 +41,13 @@ public class DetailActivity extends AppCompatActivity {
         String title = editTitle.getText().toString();
         String author = editAuthor.getText().toString();
         String content = editContent.getText().toString();
-        
+        Date date = new Date();
+        long bbsdate = date.getTime();
+
 
         // 파이어 베이스에 데이터 넣기
         // 1 데이터 객체 생성
-        Bbs bbs = new Bbs(title, author,content);
+        Bbs bbs = new Bbs(title, author,content,bbsdate);
         // 2. 입력할 데이터의 키 생성
         String bbsKey = bbsRef.push().getKey(); // 자동생성된 키를 가져온다
         // 3. 생성된 키를 레퍼런스로 데이터를 입력
