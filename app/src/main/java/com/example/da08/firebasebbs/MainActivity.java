@@ -33,5 +33,10 @@ public class MainActivity extends AppCompatActivity implements PermissionControl
     @Override
     public void init() {
         // 초기화 처리
+
+        Intent intent = new Intent(this, NaviActivity.class);
+        startActivity(intent);
+
+        finish();  // splash 화면은 backstack에 남아있으면 안되므로 종료시켜줘야함
     }
 }
