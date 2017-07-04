@@ -1,13 +1,16 @@
 package com.example.da08.firebasebbs;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.da08.firebasebbs.domain.Bbs;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -24,7 +27,8 @@ import java.util.Date;
 public class DetailActivity extends AppCompatActivity {
 
     EditText editTitle, editAuthor, editContent;
-    Button btnSave;
+    Button btnSave, btnGallery;
+    TextView txtImgName;
 
     FirebaseDatabase database;
     DatabaseReference bbsRef;
@@ -46,6 +50,8 @@ public class DetailActivity extends AppCompatActivity {
         editAuthor = (EditText)findViewById(R.id.editAuthor);
         editContent = (EditText)findViewById(R.id.editContent);
         btnSave  = (Button)findViewById(R.id.btnSave);
+        btnGallery  = (Button)findViewById(R.id.btnGallery);
+        txtImgName = (TextView)findViewById(R.id.txtImgName);
     }
 
 
@@ -98,5 +104,27 @@ public class DetailActivity extends AppCompatActivity {
         //    delete : bbsRef.child(bbsKey).setValue(null);
         // 데이터 입력후 창 닫기
         finish();
+    }
+
+    // 화면의 gallery버튼 자동 링크
+    public void openGallery(View v){
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        // 가. 이미지 선택창 호출
+        startActivityForResult( Intent.createChooser(intent, "앱을 선택하세요") , 100);  // 코드가 100
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK){
+            switch (requestCode) {
+                // 나. 이미지 선택창에서 선택된 이미지의 경로 추출
+                case 100:
+                    Uri imageUri = data.getData();
+                    txtImgName.setText(imageUri.getPath());
+                    break;
+            }
+        }
     }
 }
