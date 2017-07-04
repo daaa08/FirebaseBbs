@@ -123,8 +123,17 @@ public class MainActivity extends AppCompatActivity implements PermissionControl
                         }else {
                             Toast.makeText(MainActivity.this, "SignIn이 되었습니다",
                                     Toast.LENGTH_SHORT).show();
+
+                            goMain();
                         }
                     }
                 });
+    }
+
+    public void goMain(){
+        Intent intent = new Intent(this, NaviActivity.class);
+        startActivity(intent);
+
+        finish();
     }
 }

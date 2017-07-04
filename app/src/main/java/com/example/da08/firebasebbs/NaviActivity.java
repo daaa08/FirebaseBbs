@@ -85,6 +85,8 @@ public class NaviActivity extends AppCompatActivity
             Intent intent = new Intent(this, ListActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_gallery) {
+            Intent intent = new Intent(this, MessageActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_slideshow) {
 

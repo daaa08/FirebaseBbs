@@ -23,8 +23,22 @@
         <activity
             android:name=".NaviActivity"
             android:label="@string/title_activity_navi"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".ReadActivity"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ReadActivity" />
+        <activity android:name=".MessageActivity" />
+
+        <service
+            android:name=".MyFirebaseMessagingService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".MyFirebaseInstanceIDService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>
