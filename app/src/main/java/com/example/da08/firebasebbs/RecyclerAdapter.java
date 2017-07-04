@@ -1,6 +1,7 @@
 package com.example.da08.firebasebbs;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,26 +49,40 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Holder
         holder.txtAuthor.setText(bbs.author);
         holder.setCount(bbs.count);
         holder.setDate(convertLongToString(bbs.date));
+        holder.setPosition(position);
 
     }
-
     private String convertLongToString(long date) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
         return sdf.format(date);
     }
 
-
     class Holder extends RecyclerView.ViewHolder{
-
+        private int position;
        private TextView txtId, txtTitle, txtAuthor, txtCount, txtDate;
 
-        public Holder(View itemView){
+        public Holder(final View itemView){
             super(itemView);
             txtId = (TextView)itemView.findViewById(R.id.txtId);
             txtTitle = (TextView)itemView.findViewById(R.id.txtTitle);
             txtAuthor = (TextView)itemView.findViewById(R.id.txtAuthor);
             txtCount = (TextView)itemView.findViewById(R.id.txtCount);
             txtDate = (TextView)itemView.findViewById(R.id.txtDate);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(itemView.getContext(), ReadActivity.class);
+                    intent.putExtra("LIST_POSITION", position);
+                    itemView.getContext().startActivity(intent);
+                }
+            });
+        }
+
+
+
+        public void setPosition(int position){
+            this.position = position;
         }
 
         public void setCount (long count){
@@ -77,6 +92,5 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Holder
         public void setDate(String date){
             txtDate.setText(date + "");
         }
-
     }
 }
