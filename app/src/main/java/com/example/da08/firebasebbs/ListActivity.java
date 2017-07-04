@@ -77,7 +77,7 @@ public class ListActivity extends AppCompatActivity {
 
     // 데이터 전송처리
     public void postData(View v){
-        Intent intent = new Intent(this, DetailActivity.class);
+        Intent intent = new Intent(this, WriteActivity.class);
         startActivity(intent);
     }
 }

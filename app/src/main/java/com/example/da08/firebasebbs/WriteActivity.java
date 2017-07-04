@@ -26,7 +26,7 @@ import com.google.firebase.storage.UploadTask;
 import java.io.File;
 import java.util.Date;
 
-public class DetailActivity extends AppCompatActivity {
+public class WriteActivity extends AppCompatActivity {
 
     EditText editTitle, editAuthor, editContent;
     Button btnSave, btnGallery;
@@ -71,7 +71,10 @@ public class DetailActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         // Get a URL to the uploaded content
-//                        Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                        // 파이어 베이스 스토리지에 방금 업로드한 파일의 경로
+                        @SuppressWarnings("VisibleForTests")
+                        Uri upLoadedUri = taskSnapshot.getDownloadUrl();
+                        afterUploadFile(upLoadedUri);
                         Log.e("storage","success");
                     }
                 })
@@ -88,16 +91,32 @@ public class DetailActivity extends AppCompatActivity {
     // 데이터 전송
     public void postData(View v ){
 
+        String imgPath = txtImgName.getText().toString();
+        // 이미지가 있으면 이미지 경로를 받아서 저장해야하기 때문에 이미지 경로를 먼저 받아서 업로드
+        if(imgPath != null && !"".equals(imgPath)){
+            upLoadFile(imgPath);
+            // 없으면 실행
+        }else{
+            afterUploadFile(null);
+        }
+
+    }
+
+    public void afterUploadFile(Uri imageUri){
+
         String title = editTitle.getText().toString();
         String author = editAuthor.getText().toString();
         String content = editContent.getText().toString();
         Date date = new Date();
         long bbsdate = date.getTime();
 
-
         // 파이어 베이스에 데이터 넣기
         // 1 데이터 객체 생성
         Bbs bbs = new Bbs(title, author,content,bbsdate);
+
+        if(imageUri != null){
+            bbs.fileUriString = imageUri.toString();
+        }
         // 2. 입력할 데이터의 키 생성
         String bbsKey = bbsRef.push().getKey(); // 자동생성된 키를 가져온다
         // 3. 생성된 키를 레퍼런스로 데이터를 입력
@@ -141,7 +160,7 @@ public class DetailActivity extends AppCompatActivity {
         String realPath = "";
         Cursor cu = context.getContentResolver().query(uri,null,null,null,null);
         if(cu.moveToNext()){
-            realPath = cu.getString(cu.getColumnIndex("_date"));
+            realPath = cu.getString(cu.getColumnIndex("_data"));
         }
         cu.close();
         return realPath;

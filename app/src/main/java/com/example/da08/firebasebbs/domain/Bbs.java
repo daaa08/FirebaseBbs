@@ -10,6 +10,7 @@ public class Bbs {
     public String title;
     public String author;
     public String content;
+    public String fileUriString;  // 파일 경로
     public long date;
     public long count;  // 조회수
 

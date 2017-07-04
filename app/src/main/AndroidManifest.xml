@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.da08.firebasebbs">
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -19,13 +19,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".ListActivity" />
-        <activity android:name=".DetailActivity" />
+        <activity android:name=".WriteActivity" />
         <activity
             android:name=".NaviActivity"
             android:label="@string/title_activity_navi"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".ReadActivity"></activity>
     </application>
 
 </manifest>
