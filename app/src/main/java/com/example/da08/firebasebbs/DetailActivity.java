@@ -55,6 +55,7 @@ public class DetailActivity extends AppCompatActivity {
         Uri uri = Uri.fromFile(file);
         // 파이어 베이스의 파일 업로드 경로
         String fileName = file.getName();
+        // 데이터 베이스의 키가 값과 동일한 구조
         StorageReference riversRef = mStorageRef.child(fileName);
 
         riversRef.putFile(uri)
