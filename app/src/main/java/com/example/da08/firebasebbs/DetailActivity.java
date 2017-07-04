@@ -1,6 +1,8 @@
 package com.example.da08.firebasebbs;
 
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -122,9 +124,26 @@ public class DetailActivity extends AppCompatActivity {
                 // 나. 이미지 선택창에서 선택된 이미지의 경로 추출
                 case 100:
                     Uri imageUri = data.getData();
-                    txtImgName.setText(imageUri.getPath());
+//                    File file = new File(imageUri.getPath());   // fileName을 가져옴
+//                    txtImgName.setText(file.getName());
+//                    txtImgName.setText(imageUri.getPath());   // 경로가있는 file을 가져올때 사용
+
+                    // file전체 경로를 가져 옴
+                    String filePath = getPsthFromUri(this,imageUri);
+                    txtImgName.setText(filePath);
                     break;
             }
         }
+    }
+
+    // Uri 에서 실제 경로 꺼내는 함수
+    public static String getPsthFromUri(Context context, Uri uri){
+        String realPath = "";
+        Cursor cu = context.getContentResolver().query(uri,null,null,null,null);
+        if(cu.moveToNext()){
+            realPath = cu.getString(cu.getColumnIndex("_date"));
+        }
+        cu.close();
+        return realPath;
     }
 }
